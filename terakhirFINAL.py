@@ -1,6 +1,6 @@
 def openandformat():
     k=[]
-    f = open('salah.txt', 'r')
+    f = open('coba.txt', 'r')
     d = f.read().split("\n")
     # print(d)
     for elemen in d:
@@ -112,8 +112,9 @@ printFormat(soal)
 print("============================================")
 perubahan = soal
 
+b = 0
 # ============================================= ALGORITMA =============================================
-while (not isGoal(bikinLurus(perubahan))):
+while (not isGoal(bikinLurus(perubahan)) and b<10):
     try: 
         # Jejak Pergerakan Node 
         # Mencari Pergerakan Node yang Mungkin [2,5,7,10] dan memasukannya ke Objek of Kemungkinan {[lurus], [lurus], [lurus]}
@@ -125,12 +126,13 @@ while (not isGoal(bikinLurus(perubahan))):
         for i in ilanginLast_move(generatemove(perubahan), last_move):
             formatSoal(gerak(i,perubahan))
             # print(costLurus(gerak(i, perubahan))) 
+            print(costLurus(gerak(i, perubahan)))
             kurang[count] = costLurus(gerak(i, perubahan))
             lurusdancost[count] = [gerak(i, perubahan), costLurus(gerak(i, perubahan))]
             count+=1
 
         # Hasil Objek of Kemungkinan adalah lurus dan cost
-        # print(lurusdancost)
+        print(lurusdancost)
         last_move = bikinLurus(perubahan).index(0)
 
         # Mencari Node dengan Least Cost Search (NextMoveLurus = [lurus])
@@ -143,7 +145,12 @@ while (not isGoal(bikinLurus(perubahan))):
 
         perubahan = formatSoal(nextMoveLurus)
         printFormat(perubahan)
+        b+=1
+        if b==10:
+            print("")
+            print("tidak bisa di selesaikan b&b")
     except TypeError:
+        print("")
         print("tidak bisa di selesaikan b&b")
         break
 

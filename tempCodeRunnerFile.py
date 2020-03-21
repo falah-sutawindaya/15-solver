@@ -1,2 +1,4 @@
- in lurusdancost.items():
-#     v[1]
+    # except TypeError:
+    #     print("")
+    #     print("tidak bisa di selesaikan b&b")
+    #     break

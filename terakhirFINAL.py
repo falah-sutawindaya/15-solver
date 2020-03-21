@@ -78,6 +78,24 @@ def formatSoal(lurus):
             if (int(new[i][j])<10):
                 new[i][j]='0'+str(new[i][j])
     return new
+# def formatSoal(lurus):
+#     new = []
+#     luruszero = lurus
+#     for i in range(0,len(luruszero)):
+#         if luruszero[i] < 10:
+#             luruszero[i] = '0' + str(luruszero[i])
+#         else:
+#             luruszero[i] = str(luruszero[i])
+#     for i in range(0,4):
+#         new.append([])
+#     for i in range(0,4):
+#         new[0].append(luruszero[i])
+#         new[1].append(luruszero[i+4])
+#         new[2].append(luruszero[i+8])
+#         new[3].append(luruszero[i+12])
+#     print(new)
+#     return new
+
 
 def ilanginLast_move(generated, last_move):
     if last_move == None:
@@ -112,13 +130,13 @@ printFormat(soal)
 print("============================================")
 perubahan = soal
 
-b = 0
+
 # ============================================= ALGORITMA =============================================
-while (not isGoal(bikinLurus(perubahan)) and b<10):
+last_move = None 
+while (not isGoal(bikinLurus(perubahan))):
     try: 
         # Jejak Pergerakan Node 
         # Mencari Pergerakan Node yang Mungkin [2,5,7,10] dan memasukannya ke Objek of Kemungkinan {[lurus], [lurus], [lurus]}
-        last_move = None 
         lurusdancost = {}
         kurang={}
         count=0
@@ -138,21 +156,21 @@ while (not isGoal(bikinLurus(perubahan)) and b<10):
         # Mencari Node dengan Least Cost Search (NextMoveLurus = [lurus])
         nextMoveLurus = None
         min = lurusdancost[0][1]
-        for k, v in lurusdancost.items():
-            if (v[1] < min):
-                min = v[1]
-                nextMoveLurus = v[0]
-
+        if (len(lurusdancost) == 1):
+            nextMoveLurus = lurusdancost[0][0]
+        else:
+            for k, v in lurusdancost.items():
+                if (v[1] < min):
+                    min = v[1]
+                    nextMoveLurus = v[0]
+        
         perubahan = formatSoal(nextMoveLurus)
         printFormat(perubahan)
-        b+=1
-        if b==10:
-            print("")
-            print("tidak bisa di selesaikan b&b")
     except TypeError:
         print("")
         print("tidak bisa di selesaikan b&b")
         break
+
 
 
 

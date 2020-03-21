@@ -156,6 +156,8 @@ while (not isGoal(bikinLurus(perubahan))):
         # Mencari Node dengan Least Cost Search (NextMoveLurus = [lurus])
         nextMoveLurus = None
         min = lurusdancost[0][1]
+        nextMoveLurus = lurusdancost[0][0]
+        # print(min)
         if (len(lurusdancost) == 1):
             nextMoveLurus = lurusdancost[0][0]
         else:
@@ -163,7 +165,8 @@ while (not isGoal(bikinLurus(perubahan))):
                 if (v[1] < min):
                     min = v[1]
                     nextMoveLurus = v[0]
-        
+        print('min: '+str(min))
+        print(nextMoveLurus)
         perubahan = formatSoal(nextMoveLurus)
         printFormat(perubahan)
     except TypeError:

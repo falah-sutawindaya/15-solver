@@ -1,3 +1,4 @@
+# notes: RAPIHIN
 def openandformat():
     k=[]
     f = open('coba.txt', 'r')

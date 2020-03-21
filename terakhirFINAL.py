@@ -102,21 +102,21 @@ def bikinLurus(soal):
             lurus.append(int(j))    
     return lurus
 
+
+# ============================================= INISIASI =============================================
 # Import dari Text tetapi format String
 soal = openandformat()
-
 
 # print horizontal
 printFormat(soal)
 print("============================================")
-
-# =============== ALGORITMA ===============
 perubahan = soal
-while (not isGoal(bikinLurus(perubahan))):
-# Jejak Pergerakan Node 
 
-# Mencari Pergerakan Node yang Mungkin [2,5,7,10] dan memasukannya ke Objek of Kemungkinan {[lurus], [lurus], [lurus]}
+# ============================================= ALGORITMA =============================================
+while (not isGoal(bikinLurus(perubahan))):
     try: 
+        # Jejak Pergerakan Node 
+        # Mencari Pergerakan Node yang Mungkin [2,5,7,10] dan memasukannya ke Objek of Kemungkinan {[lurus], [lurus], [lurus]}
         last_move = None 
         lurusdancost = {}
         kurang={}
@@ -129,11 +129,11 @@ while (not isGoal(bikinLurus(perubahan))):
             lurusdancost[count] = [gerak(i, perubahan), costLurus(gerak(i, perubahan))]
             count+=1
 
-    # Hasil Objek of Kemungkinan adalah lurus dan cost
+        # Hasil Objek of Kemungkinan adalah lurus dan cost
         # print(lurusdancost)
         last_move = bikinLurus(perubahan).index(0)
 
-    # Mencari Node dengan Least Cost Search (NextMoveLurus = [lurus])
+        # Mencari Node dengan Least Cost Search (NextMoveLurus = [lurus])
         nextMoveLurus = None
         min = lurusdancost[0][1]
         for k, v in lurusdancost.items():
@@ -146,23 +146,6 @@ while (not isGoal(bikinLurus(perubahan))):
     except TypeError:
         print("tidak bisa di selesaikan b&b")
         break
-
-
-
-
-
-
-
-# PENCARIAN KEMUNGKINAN DARI THE NEXT PERUBAHAN
-# for i in ilanginLast_move(generatemove(formatSoal(nextMoveLurus)), last_move):
-    # print("============================================")
-    # formatSoal(gerak(i, formatSoal(nextMoveLurus)))
-    # for i in formatSoal(gerak(i, formatSoal(nextMoveLurus))):
-    #     print(i)
-    # print(costLurus(gerak(i, nextMoveLurus)))
-    # print(gerak(i, formatSoal(nextMoveLurus)))
-    
-
 
 
 

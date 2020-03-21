@@ -1,2 +1,2 @@
-for i in generatemove(soal):
-    formatSoal(gerak(i))
+ in lurusdancost.items():
+#     v[1]

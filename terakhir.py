@@ -1,6 +1,6 @@
 def openandformat():
     k=[]
-    f = open('berkasteks.txt', 'r')
+    f = open('salah.txt', 'r')
     d = f.read().split("\n")
     # print(d)
     for elemen in d:
@@ -29,6 +29,14 @@ def cost(soal):
     for i in range(0,16):
         if (salah[i] != i+1):
             if (salah[i]!=0):
+                sum+=1
+    return sum
+
+def costLurus(lurus):
+    sum=0
+    for i in range(0,16):
+        if (lurus[i] != i+1):
+            if (lurus[i]!=0):
                 sum+=1
     return sum
 
@@ -84,17 +92,30 @@ def isGoal(lurus):
     return True
 
 
+# Import dari Text tetapi format String
 soal = openandformat()
+print(soal)
+
+# print horizontal
 printFormat(soal)
 
+# liat cost posisi terbaru
 totalSalah = cost(soal)
 # print(totalSalah)
-print("============================================")
-# print(generatemove(soal)) -> 8,13
 
+print("============================================")
+print(generatemove(soal)) 
 # for i in generatemove(soal):
-#     formatSoal(gerak(i))
+#     print(cost())
+lurusdancost = {}
+count=0
+for i in generatemove(soal):
+    formatSoal(gerak(i))
+    print(costLurus(gerak(i)))
+    lurusdancost[count] = [gerak(i),costLurus(gerak(i))]
+    count+=1
 # lastPosition = None
+print(lurusdancost)
 
 
 

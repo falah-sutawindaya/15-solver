@@ -1,3 +1,2 @@
- soal:
-    for j in i:
-        lurus.append(int(j))
+for i in generatemove(soal):
+    formatSoal(gerak(i))

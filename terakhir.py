@@ -2,7 +2,7 @@ def openandformat():
     k=[]
     f = open('berkasteks.txt', 'r')
     d = f.read().split("\n")
-    print(d)
+    # print(d)
     for elemen in d:
         k.append(elemen.split(" "))
     print(k)
@@ -58,29 +58,43 @@ def gerak(kesitu):
     print(lurus) 
     return lurus
 
+def formatSoal(lurus):
+    new = []
+    for i in range(0,4):
+        new.append([])
+    for i in range(0,4):
+        new[0].append(str(lurus[i]))
+        new[1].append(str(lurus[i+4]))
+        new[2].append(str(lurus[i+8]))
+        new[3].append(str(lurus[i+12]))
+    for i in range(0,4):
+        for j in range(0,4):
+            if (int(new[i][j])<10):
+                new[i][j]='0'+str(new[i][j])
+    # bidak
+    for i in new:
+        print(i)
+    return new
+
+def isGoal(lurus):
+    goal_node=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 0]
+    for i in range(0,len(goal_node)):
+        if (lurus[i]!=goal_node[i]):
+            return False
+    return True
+
+
 soal = openandformat()
 printFormat(soal)
 
 totalSalah = cost(soal)
-print(totalSalah)
-print("===========")
-print(generatemove(soal))
+# print(totalSalah)
+print("============================================")
+# print(generatemove(soal)) -> 8,13
 
-lurus = []
-for i in soal:
-    for j in i:
-        lurus.append(int(j))
-
-print(lurus)
-
-
-
-# for i in range(0,4):
-#     for j in range(0,4):
-
-
-
-moveMemory = None
+# for i in generatemove(soal):
+#     formatSoal(gerak(i))
+# lastPosition = None
 
 
 

@@ -79,24 +79,6 @@ def formatSoal(lurus):
             if (int(new[i][j])<10):
                 new[i][j]='0'+str(new[i][j])
     return new
-# def formatSoal(lurus):
-#     new = []
-#     luruszero = lurus
-#     for i in range(0,len(luruszero)):
-#         if luruszero[i] < 10:
-#             luruszero[i] = '0' + str(luruszero[i])
-#         else:
-#             luruszero[i] = str(luruszero[i])
-#     for i in range(0,4):
-#         new.append([])
-#     for i in range(0,4):
-#         new[0].append(luruszero[i])
-#         new[1].append(luruszero[i+4])
-#         new[2].append(luruszero[i+8])
-#         new[3].append(luruszero[i+12])
-#     print(new)
-#     return new
-
 
 def ilanginLast_move(generated, last_move):
     if last_move == None:

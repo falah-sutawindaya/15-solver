@@ -111,55 +111,57 @@ soal = openandformat()
 # print horizontal
 printFormat(soal)
 print("============================================")
-perubahan = soal
+
 
 
 # ============================================= ALGORITMA =============================================
-last_move = None 
-while (not isGoal(bikinLurus(perubahan))):
-    try: 
-        # Jejak Pergerakan Node 
-        # Mencari Pergerakan Node yang Mungkin [2,5,7,10] dan memasukannya ke Objek of Kemungkinan {[lurus], [lurus], [lurus]}
-        lurusdancost = {}
-        kurang={}
-        count=0
-        print(ilanginLast_move(generatemove(perubahan), last_move))
-        for i in ilanginLast_move(generatemove(perubahan), last_move):
-            formatSoal(gerak(i,perubahan))
-            print(costLurus(gerak(i, perubahan)))
-            kurang[count] = costLurus(gerak(i, perubahan))
-            lurusdancost[count] = [gerak(i, perubahan), costLurus(gerak(i, perubahan))]
-            count+=1
+def kurangi():
+    perubahan = soal
+    last_move = None 
+    while (not isGoal(bikinLurus(perubahan))):
+        try: 
+            # Jejak Pergerakan Node 
+            # Mencari Pergerakan Node yang Mungkin [2,5,7,10] dan memasukannya ke Objek of Kemungkinan {[lurus], [lurus], [lurus]}
+            lurusdancost = {}
+            kurang={}
+            count=0
+            print(ilanginLast_move(generatemove(perubahan), last_move))
+            for i in ilanginLast_move(generatemove(perubahan), last_move):
+                formatSoal(gerak(i,perubahan))
+                print(costLurus(gerak(i, perubahan)))
+                kurang[count] = costLurus(gerak(i, perubahan))
+                lurusdancost[count] = [gerak(i, perubahan), costLurus(gerak(i, perubahan))]
+                count+=1
 
-        # Hasil Objek of Kemungkinan adalah lurus dan cost
-        print(lurusdancost)
-        last_move = bikinLurus(perubahan).index(0)
+            # Hasil Objek of Kemungkinan adalah lurus dan cost
+            print(lurusdancost)
+            last_move = bikinLurus(perubahan).index(0)
 
-        # Mencari Node dengan Least Cost Search (NextMoveLurus = [lurus])
-        nextMoveLurus = None
-        min = lurusdancost[0][1]
-        nextMoveLurus = lurusdancost[0][0]
-        # print(min)
-        if (len(lurusdancost) == 1):
+            # Mencari Node dengan Least Cost Search (NextMoveLurus = [lurus])
+            nextMoveLurus = None
+            min = lurusdancost[0][1]
             nextMoveLurus = lurusdancost[0][0]
-        else:
-            for k, v in lurusdancost.items():
-                if (v[1] < min):
-                    min = v[1]
-                    nextMoveLurus = v[0]
-        print('min: '+str(min))
-        print(nextMoveLurus)
-        perubahan = formatSoal(nextMoveLurus)
-        printFormat(perubahan)
-    except TypeError:
-        print("")
-        print("tidak bisa di selesaikan b&b")
-        break
+            # print(min)
+            if (len(lurusdancost) == 1):
+                nextMoveLurus = lurusdancost[0][0]
+            else:
+                for k, v in lurusdancost.items():
+                    if (v[1] < min):
+                        min = v[1]
+                        nextMoveLurus = v[0]
+            print('min: '+str(min))
+            print(nextMoveLurus)
+            perubahan = formatSoal(nextMoveLurus)
+            printFormat(perubahan)
+        except TypeError:
+            print("")
+            print("tidak bisa di selesaikan b&b")
+            break
 
 
 
 
-
+kurangi()
 
 
 

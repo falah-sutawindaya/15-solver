@@ -1,12 +1,11 @@
-# notes: RAPIHIN
-def openandformat():
+import time
+
+def openandformat(namaFile):
     k=[]
-    f = open('coba.txt', 'r')
+    f = open(namaFile, 'r')
     d = f.read().split("\n")
-    # print(d)
     for elemen in d:
         k.append(elemen.split(" "))
-    # print(k)
     for i in range(0,len(k)):
         for j in range(0,len(k)):
             if (k[i][j] == ''):
@@ -25,7 +24,6 @@ def cost(soal):
         for j in i:
             salah.append(int(j))
 
-    # print(salah)
     sum=0
     for i in range(0,16):
         if (salah[i] != i+1):
@@ -52,7 +50,6 @@ def generatemove(soal):
     for i in soal:
         for j in i:
             salah.append(int(j))
-    # print(salah)
     return move[salah.index(0)]
 
 def gerak(kesitu, soal):
@@ -64,6 +61,14 @@ def gerak(kesitu, soal):
     lurus[lurus.index(0)] = temp
     lurus[kesitu] = 0
     return lurus
+
+def kurang(i, lurus):
+    lurus_temp = lurus.remove(0)
+    tot=0
+    for x in range(i,len(lurus)):
+        if lurus[i]>lurus[x]:
+            tot+=1
+    return tot
 
 def formatSoal(lurus):
     new = []
@@ -103,62 +108,104 @@ def bikinLurus(soal):
             lurus.append(int(j))    
     return lurus
 
+def printJumlahKurangdanX():
+    posisi = {}
+    X = None
+    jumlahKurang=0
+    for i in range(0,len(bikinLurus(soal))):
+        if (bikinLurus(soal)[i] == 0):
+            print('Posisi '+ str(i+1) + ': ' + 'Node Kosong')
+            X = i+1
+        else:
+            posisiKe = 'Posisi '+ str(i+1)
+            posisi[posisiKe] = kurang(i,bikinLurus(soal))
+            jumlahKurang+=kurang(i,bikinLurus(soal))
+
+    print('Kurang pada setiap posisi: ' + str(posisi))
+    print('Jumlah kurang(i) + X =  ' + str(jumlahKurang+X))
+    
+
+def algo(solusi):
+    start_time = time.time()
+    perubahan = soal
+    last_move = None 
+    jumlahSimpul=1
+    ada_solusi=True
+    while (not isGoal(bikinLurus(perubahan))):
+        try: 
+        # Jejak Pergerakan Node 
+        # Mencari Pergerakan Node yang Mungkin [2,5,7,10] dan memasukannya ke Objek of Kemungkinan {[lurus], [lurus], [lurus]}
+            lurusdancost = {}
+            count=0
+            for i in ilanginLast_move(generatemove(perubahan), last_move):
+                formatSoal(gerak(i,perubahan))
+                lurusdancost[count] = [gerak(i, perubahan), costLurus(gerak(i, perubahan))]
+                count+=1
+                jumlahSimpul+=1
+
+            # Hasil Objek of Kemungkinan adalah lurus dan cost
+            last_move = bikinLurus(perubahan).index(0)
+
+            # Mencari Node dengan Least Cost Search (NextMoveLurus = [lurus])
+            nextMoveLurus = None
+            min = lurusdancost[0][1]
+            nextMoveLurus = lurusdancost[0][0]    
+            if (len(lurusdancost) == 1):
+                nextMoveLurus = lurusdancost[0][0]
+            else:
+                count_same=0
+                for k, v in lurusdancost.items():
+                    if (v[1] < min):
+                        min = v[1]
+                        nextMoveLurus = v[0]
+                for k, v in lurusdancost.items():
+                    if (v[1] == min):
+                        count_same+=1
+            
+            if (count_same > 1):
+                print("")
+                print("tidak bisa di selesaikan b&b")
+                ada_solusi = False
+                break
+            
+            perubahan = formatSoal(nextMoveLurus)
+            solusi.append(nextMoveLurus)
+        except TypeError:
+            print("")
+            print("tidak bisa di selesaikan b&b")
+            break
+
+    waktu = " %s seconds " % (time.time() - start_time)
+    if (ada_solusi):
+        print("Langkah-Langkah: ")
+        for i in solusi:
+            for j in formatSoal(i):
+                print(j)
+            print("============================================")
+    
+    
+    print('')
+    print('Jumlah simpul di bangkitkan: ' + str(jumlahSimpul))
+    print('waktu eksekusi: '+waktu)
 
 # ============================================= INISIASI =============================================
 # Import dari Text tetapi format String
-soal = openandformat()
+soal = openandformat("instansiasi.txt")
 
-# print horizontal
-printFormat(soal)
+# print horizontal & informasi
 print("============================================")
-perubahan = soal
-
+print("Matriks Posisi Awal: ")
+printFormat(soal)
+print("")
+print("============================================")
+print("informasi: ")
+solusi=[]
+printJumlahKurangdanX()
+print("============================================")
+print("")
 
 # ============================================= ALGORITMA =============================================
-last_move = None 
-while (not isGoal(bikinLurus(perubahan))):
-    try: 
-        # Jejak Pergerakan Node 
-        # Mencari Pergerakan Node yang Mungkin [2,5,7,10] dan memasukannya ke Objek of Kemungkinan {[lurus], [lurus], [lurus]}
-        lurusdancost = {}
-        kurang={}
-        count=0
-        print(ilanginLast_move(generatemove(perubahan), last_move))
-        for i in ilanginLast_move(generatemove(perubahan), last_move):
-            formatSoal(gerak(i,perubahan))
-            print(costLurus(gerak(i, perubahan)))
-            kurang[count] = costLurus(gerak(i, perubahan))
-            lurusdancost[count] = [gerak(i, perubahan), costLurus(gerak(i, perubahan))]
-            count+=1
-
-        # Hasil Objek of Kemungkinan adalah lurus dan cost
-        print(lurusdancost)
-        last_move = bikinLurus(perubahan).index(0)
-
-        # Mencari Node dengan Least Cost Search (NextMoveLurus = [lurus])
-        nextMoveLurus = None
-        min = lurusdancost[0][1]
-        nextMoveLurus = lurusdancost[0][0]
-        # print(min)
-        if (len(lurusdancost) == 1):
-            nextMoveLurus = lurusdancost[0][0]
-        else:
-            for k, v in lurusdancost.items():
-                if (v[1] < min):
-                    min = v[1]
-                    nextMoveLurus = v[0]
-        print('min: '+str(min))
-        print(nextMoveLurus)
-        perubahan = formatSoal(nextMoveLurus)
-        printFormat(perubahan)
-    except TypeError:
-        print("")
-        print("tidak bisa di selesaikan b&b")
-        break
-
-
-
-
+algo(solusi)
 
 
 

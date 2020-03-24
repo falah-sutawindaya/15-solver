@@ -1,7 +1,7 @@
 # notes: RAPIHIN
-def openandformat():
+def openandformat(s):
     k=[]
-    f = open('coba.txt', 'r')
+    f = open(s, 'r')
     d = f.read().split("\n")
     # print(d)
     for elemen in d:
@@ -111,9 +111,14 @@ soal = openandformat()
 # print horizontal
 printFormat(soal)
 print("============================================")
-
-
-
+print(bikinLurus(soal))
+arr = bikinLurus(soal)
+inv_count = 0
+for i in range(0,15):
+    for j in range(i+1, 15):
+        if (arr[j] and arr[i] and (arr[i]>arr[j])):
+            inv_count+=1
+print(inv_count)
 # ============================================= ALGORITMA =============================================
 def kurangi():
     perubahan = soal
@@ -158,10 +163,11 @@ def kurangi():
             print("tidak bisa di selesaikan b&b")
             break
 
+  
 
 
+# kurangi()
 
-kurangi()
 
 
 
